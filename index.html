@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отзывы и предложения — СКФ МТУСИ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:        #F7F4FF;
+      --surface:   #FFFFFF;
+      --blue-dark: #5B21B6;
+      --blue:      #7C3AED;
+      --blue-mid:  #9B5CF6;
+      --blue-soft: #EDE9FE;
+      --ink:       #1A0D36;
+      --muted:     #6B5F8C;
+      --border:    #DDD6FE;
+      --success:   #16A97A;
+      --radius:    14px;
+      --shadow:    0 4px 24px rgba(91,33,182,.09);
+      --shadow-lg: 0 12px 40px rgba(91,33,182,.15);
+      --transition: .35s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ─── REDUCED MOTION ─────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247,244,255,.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      animation: slideDown .6s ease both;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: .75rem;
+      text-decoration: none; color: var(--ink);
+    }
+
+    .logo-badge {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      display: grid; place-items: center;
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: .85rem; font-weight: 700;
+      letter-spacing: -.5px;
+      flex-shrink: 0;
+    }
+
+    .logo-text { line-height: 1.2; }
+    .logo-text strong { display: block; font-size: .92rem; font-weight: 600; }
+    .logo-text span   { font-size: .72rem; color: var(--muted); }
+
+    nav a {
+      color: var(--muted); text-decoration: none; font-size: .875rem;
+      font-weight: 500; padding: .4rem .85rem; border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+    }
+    nav a:hover { color: var(--blue); background: var(--blue-soft); }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Telecom-wave SVG background — the signature element */
+    .hero-waves {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 180px; overflow: hidden; pointer-events: none;
+    }
+
+    .hero-waves svg { width: 100%; height: 100%; }
+
+    .wave { animation: waveFlow 7s linear infinite; transform-origin: left center; }
+    .wave:nth-child(2) { animation-duration: 10s; animation-delay: -3s; opacity: .5; }
+    .wave:nth-child(3) { animation-duration: 13s; animation-delay: -6s; opacity: .3; }
+
+    @keyframes waveFlow {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Subtle radial glow */
+    .hero::before {
+      content: '';
+      position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,92,246,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: .78rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--blue-mid);
+      background: var(--blue-soft); padding: .35rem 1rem; border-radius: 999px;
+      border: 1px solid var(--border);
+      display: inline-block; margin-bottom: 1.75rem;
+      animation: fadeUp .7s .2s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700; line-height: 1.15;
+      color: var(--ink);
+      max-width: 780px;
+      animation: fadeUp .7s .35s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(120deg, var(--blue-dark), var(--blue-mid));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 1.25rem;
+      font-size: 1.1rem; color: var(--muted); max-width: 520px;
+      animation: fadeUp .7s .5s ease both;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .7s .65s ease both;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.75rem; border-radius: 10px;
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; border: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .btn:active { transform: scale(.97); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(91,33,182,.35);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 28px rgba(91,33,182,.45);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: var(--surface); color: var(--blue);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .btn-outline:hover { background: var(--blue-soft); transform: translateY(-2px); }
+
+    /* ─── SECTION SHARED ─────────────────────────────────── */
+    section { padding: 5rem 1.5rem; }
+
+    .section-label {
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--blue-mid);
+      margin-bottom: .6rem; display: block;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      color: var(--ink); line-height: 1.2;
+    }
+
+    .section-desc {
+      margin-top: .75rem; color: var(--muted); font-size: 1rem; max-width: 520px;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; }
+    .container-sm { max-width: 680px; margin: 0 auto; }
+
+    /* ─── REVEAL ANIMATION ───────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── STATS ──────────────────────────────────────────── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.25rem; margin-top: 3.5rem;
+    }
+
+    .stat-card {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 1.75rem 1.5rem;
+      text-align: center; box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label { font-size: .82rem; color: var(--muted); margin-top: .45rem; }
+
+    /* ─── FORM SECTION ───────────────────────────────────── */
+    #form-section { background: var(--surface); }
+
+    .form-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: 2.75rem 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin-top: 2.5rem;
+    }
+
+    .type-tabs {
+      display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.75rem;
+    }
+
+    .type-tab {
+      padding: .4rem 1rem; border-radius: 999px; border: 1.5px solid var(--border);
+      font-size: .82rem; font-weight: 600; cursor: pointer; background: var(--surface);
+      color: var(--muted); transition: all var(--transition);
+    }
+    .type-tab:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-soft); }
+    .type-tab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    .field { display: flex; flex-direction: column; gap: .45rem; }
+    .field.full { grid-column: 1 / -1; }
+
+    label { font-size: .82rem; font-weight: 600; color: var(--ink); }
+
+    input, textarea, select {
+      padding: .75rem 1rem; border-radius: 10px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      font-family: 'Inter', sans-serif; font-size: .95rem; color: var(--ink);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      width: 100%; outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue-mid);
+      box-shadow: 0 0 0 3px rgba(139,92,246,.18);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+
+    .char-count { font-size: .75rem; color: var(--muted); text-align: right; margin-top: .25rem; }
+
+    .anon-row {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .9rem 1rem; border-radius: 10px;
+      background: var(--blue-soft); border: 1px solid var(--border);
+      cursor: pointer; user-select: none;
+    }
+
+    .anon-row input[type="checkbox"] {
+      width: 18px; height: 18px; accent-color: var(--blue);
+      flex-shrink: 0; cursor: pointer;
+    }
+
+    .anon-label { font-size: .85rem; color: var(--ink); }
+
+    .form-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;
+    }
+
+    .privacy-note { font-size: .78rem; color: var(--muted); max-width: 320px; }
+
+    /* ─── SUCCESS TOAST ──────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: var(--success); color: #fff;
+      padding: 1rem 1.5rem; border-radius: var(--radius);
+      font-size: .9rem; font-weight: 600;
+      box-shadow: 0 8px 28px rgba(22,169,122,.4);
+      display: flex; align-items: center; gap: .6rem;
+      transform: translateY(120%); opacity: 0;
+      transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .45s ease;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+    /* ─── FEEDBACK FEED ──────────────────────────────────── */
+    #feed-section { background: var(--bg); }
+
+    .feed-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem;
+    }
+
+    .filter-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    .filter-btn {
+      padding: .35rem .9rem; border-radius: 999px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      font-size: .78rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    .feed-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feedback-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      animation: cardPop .5s ease both;
+    }
+    @keyframes cardPop {
+      from { opacity: 0; transform: scale(.95) translateY(12px); }
+      to   { opacity: 1; transform: scale(1)  translateY(0); }
+    }
+    .feedback-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    .card-badge {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: .25rem .75rem; border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .badge-suggestion  { background: #F3EEFF; color: #7C3AED; }
+    .badge-praise      { background: #EDFAF4; color: #16A97A; }
+    .badge-complaint   { background: #FFF2F0; color: #D94141; }
+    .badge-question    { background: #FFF9EC; color: #C47F0A; }
+
+    .card-body { font-size: .9rem; color: var(--ink); line-height: 1.6; }
+
+    .card-meta {
+      margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .75rem; color: var(--muted);
+    }
+
+    .card-like {
+      background: none; border: 1.5px solid var(--border); border-radius: 999px;
+      padding: .25rem .75rem; cursor: pointer; font-size: .75rem;
+      color: var(--muted); display: flex; align-items: center; gap: .35rem;
+      transition: all var(--transition); font-family: 'Inter', sans-serif; font-weight: 600;
+    }
+    .card-like:hover, .card-like.liked {
+      background: #FFF0F0; border-color: #F87171; color: #EF4444;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem;
+      color: var(--muted);
+    }
+    .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: .75rem; display: block; }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,.6);
+      padding: 3rem 1.5rem;
+      text-align: center; font-size: .82rem; line-height: 1.8;
+    }
+    footer strong { color: #fff; }
+    footer a { color: rgba(255,255,255,.55); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-card { padding: 1.75rem 1.25rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header>
+  <a class="logo" href="#">
+    <div class="logo-badge">СКФ</div>
+    <div class="logo-text">
+      <strong>СКФ МТУСИ</strong>
+      <span>Северо-Кавказский филиал</span>
+    </div>
+  </a>
+  <nav>
+    <a href="#form-section">Оставить отзыв</a>
+    <a href="#feed-section">Лента</a>
+  </nav>
+</header>
+
+<!-- ══ HERO ════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <span class="hero-eyebrow">Обратная связь</span>
+  <h1>Ваш голос важен<br>для <em>нашего университета</em></h1>
+  <p class="hero-sub">Делитесь идеями, предложениями и отзывами — вместе мы делаем СКФ МТУСИ лучше для каждого</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#form-section">✦ Оставить отзыв</a>
+    <a class="btn btn-outline" href="#feed-section">Смотреть все</a>
+  </div>
+
+  <!-- Signature: telecom sine-wave animation -->
+  <div class="hero-waves">
+    <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <!-- Wave 1 -->
+        <path class="wave" d="
+          M0 90 C120 30, 240 150, 360 90
+          S600 30, 720 90 S960 150, 1080 90
+          S1320 30, 1440 90 S1680 150, 1800 90
+          S2040 30, 2160 90 S2400 150, 2520 90
+          S2760 30, 2880 90
+          V180 H0 Z"
+          fill="rgba(91,33,182,.06)" />
+        <!-- Wave 2 -->
+        <path class="wave" d="
+          M0 100 C100 50, 200 130, 360 100
+          S560 60, 720 100 S920 140, 1080 100
+          S1280 60, 1440 100 S1640 140, 1800 100
+          S2000 60, 2160 100 S2360 140, 2520 100
+          S2720 60, 2880 100
+          V180 H0 Z"
+          fill="rgba(139,92,246,.05)" />
+        <!-- Wave 3 -->
+        <path class="wave" d="
+          M0 110 C80 70, 200 140, 360 110
+          S560 80, 720 110 S920 140, 1080 110
+          S1280 80, 1440 110 S1640 140, 1800 110
+          S2000 80, 2160 110 S2360 140, 2520 110
+          S2720 80, 2880 110
+          V180 H0 Z"
+          fill="rgba(167,139,250,.04)" />
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ══ STATS ════════════════════════════════════════════════ -->
+<section style="background: var(--surface); padding: 3.5rem 1.5rem;">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">Отзывов получено</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-num" id="stat-suggestions">0</div>
+        <div class="stat-label">Предложений</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-num" id="stat-praise">0</div>
+        <div class="stat-label">Положительных</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-num" id="stat-days">0</div>
+        <div class="stat-label">Дней работы портала</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FORM ════════════════════════════════════════════════ -->
+<section id="form-section">
+  <div class="container-sm">
+    <div class="reveal">
+      <span class="section-label">Поделитесь мнением</span>
+      <h2 class="section-title">Оставить отзыв или предложение</h2>
+      <p class="section-desc">Анонимно или от своего имени — выбор за вами. Мы читаем каждое сообщение.</p>
+    </div>
+
+    <div class="form-card reveal reveal-delay-1">
+      <!-- Type Tabs -->
+      <div class="type-tabs" id="type-tabs">
+        <button class="type-tab active" data-type="suggestion">💡 Предложение</button>
+        <button class="type-tab" data-type="praise">👍 Похвала</button>
+        <button class="type-tab" data-type="complaint">⚠️ Жалоба</button>
+        <button class="type-tab" data-type="question">❓ Вопрос</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-name">Ваше имя</label>
+          <input type="text" id="f-name" placeholder="Иван Иванов" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="f-dept">Статус</label>
+          <select id="f-dept">
+            <option value="">— выберите —</option>
+            <option>Студент</option>
+            <option>Выпускник</option>
+            <option>Преподаватель</option>
+            <option>Сотрудник</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-subject">Тема</label>
+          <input type="text" id="f-subject" placeholder="Кратко опишите тему" maxlength="100" />
+        </div>
+        <div class="field full">
+          <label for="f-body">Сообщение</label>
+          <textarea id="f-body" placeholder="Расскажите подробнее…" maxlength="600" id="f-body"></textarea>
+          <div class="char-count"><span id="char-num">0</span> / 600</div>
+        </div>
+        <div class="field full">
+          <label class="anon-row">
+            <input type="checkbox" id="f-anon" />
+            <span class="anon-label">Отправить анонимно (имя и статус скрыты)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <p class="privacy-note">Данные хранятся локально в браузере и не передаются третьим лицам.</p>
+        <button class="btn btn-primary" id="submit-btn" onclick="submitFeedback()">Отправить →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEED ════════════════════════════════════════════════ -->
+<section id="feed-section">
+  <div class="container">
+    <div class="feed-header reveal">
+      <div>
+        <span class="section-label">Сообщество говорит</span>
+        <h2 class="section-title">Лента отзывов</h2>
+      </div>
+      <div class="filter-row" id="filter-row">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="suggestion">Предложения</button>
+        <button class="filter-btn" data-filter="praise">Похвала</button>
+        <button class="filter-btn" data-filter="complaint">Жалобы</button>
+        <button class="filter-btn" data-filter="question">Вопросы</button>
+      </div>
+    </div>
+    <div class="feed-grid" id="feed-grid">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
+<footer>
+  <strong>СКФ МТУСИ</strong> — Северо-Кавказский филиал<br>
+  Московского технического университета связи и информатики<br>
+  <br>
+  <a href="https://skf.mtuci.ru" target="_blank" rel="noopener">skf.mtuci.ru</a>
+  &nbsp;·&nbsp;
+  <span>Ставрополь</span>
+</footer>
+
+<!-- ══ TOAST ═══════════════════════════════════════════════ -->
+<div class="toast" id="toast">
+  <span>✓</span> Отзыв опубликован — спасибо!
+</div>
+
+<!-- ══ SCRIPTS ═════════════════════════════════════════════ -->
+<script>
+  /* ════════════════════════════════════════════════════════
+     НАСТРОЙКА SUPABASE
+     ─────────────────────────────────────────────────────
+     1. Зарегистрируйтесь на https://supabase.com (бесплатно)
+     2. Создайте новый проект
+     3. Перейдите в SQL Editor и выполните:
+
+        create table feedback (
+          id         text primary key,
+          type       text not null,
+          subject    text not null,
+          body       text not null,
+          author     text not null,
+          date       text not null,
+          likes      integer default 0
+        );
+
+        -- Разрешить всем читать и добавлять отзывы:
+        alter table feedback enable row level security;
+
+        create policy "public read"
+          on feedback for select using (true);
+
+        create policy "public insert"
+          on feedback for insert with check (true);
+
+        create policy "public update likes"
+          on feedback for update using (true) with check (true);
+
+     4. В Project Settings → API скопируйте:
+        - Project URL  →  вставьте в SUPABASE_URL ниже
+        - anon public  →  вставьте в SUPABASE_KEY ниже
+     ════════════════════════════════════════════════════════ */
+
+  const SUPABASE_URL = 'https://ВАШ_ПРОЕКТ.supabase.co';   // ← сюда
+  const SUPABASE_KEY = 'ВАШ_ANON_KEY';                      // ← сюда
+
+  /* ─── Supabase helpers ────────────────────────────────── */
+  const sbHeaders = () => ({
+    'apikey':        SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type':  'application/json',
+  });
+
+  async function dbFetch(path, opts = {}) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: sbHeaders(),
+      ...opts,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.status === 204 ? null : res.json();
+  }
+
+  async function loadItems() {
+    return dbFetch('feedback?select=*&order=date.desc,id.desc');
+  }
+
+  async function insertItem(item) {
+    return dbFetch('feedback', {
+      method:  'POST',
+      headers: { ...sbHeaders(), Prefer: 'return=minimal' },
+      body:    JSON.stringify(item),
+    });
+  }
+
+  async function patchLikes(id, likes) {
+    return dbFetch(`feedback?id=eq.${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      body:   JSON.stringify({ likes }),
+    });
+  }
+
+  /* ─── Liked IDs (per-browser, не влияет на счётчики) ─── */
+  function getLiked() {
+    try { return JSON.parse(localStorage.getItem('skf_liked') || '[]'); } catch { return []; }
+  }
+  function saveLiked(arr) {
+    try { localStorage.setItem('skf_liked', JSON.stringify(arr)); } catch {}
+  }
+
+  /* ─── State ───────────────────────────────────────────── */
+  let items         = [];
+  let currentFilter = 'all';
+  let selectedType  = 'suggestion';
+
+  /* ─── Stats ───────────────────────────────────────────── */
+  function updateStats() {
+    animCount('stat-total',       items.length, 0);
+    animCount('stat-suggestions', items.filter(i => i.type === 'suggestion').length, 100);
+    animCount('stat-praise',      items.filter(i => i.type === 'praise').length, 200);
+    const days = Math.floor((Date.now() - new Date('2024-09-01')) / 86400000);
+    animCount('stat-days', days, 300);
+  }
+
+  function animCount(id, target, delay) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    setTimeout(() => {
+      let start = 0; const dur = 900;
+      const step = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.round(p * target);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, delay);
+  }
+
+  /* ─── Type Tabs ───────────────────────────────────────── */
+  document.getElementById('type-tabs').addEventListener('click', e => {
+    const tab = e.target.closest('[data-type]');
+    if (!tab) return;
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    selectedType = tab.dataset.type;
+  });
+
+  /* ─── Char counter ────────────────────────────────────── */
+  document.getElementById('f-body').addEventListener('input', function () {
+    document.getElementById('char-num').textContent = this.value.length;
+  });
+
+  /* ─── Submit ──────────────────────────────────────────── */
+  async function submitFeedback() {
+    const bodyEl = document.getElementById('f-body');
+    const bodyTxt = bodyEl.value.trim();
+    if (!bodyTxt) { bodyEl.focus(); shake(bodyEl); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Отправляем…';
+
+    const anon    = document.getElementById('f-anon').checked;
+    const rawName = document.getElementById('f-name').value.trim();
+    const dept    = document.getElementById('f-dept').value;
+    const subject = document.getElementById('f-subject').value.trim() || 'Без темы';
+
+    let author = 'Аноним';
+    if (!anon) {
+      if (rawName && dept) author = `${rawName} (${dept})`;
+      else if (rawName)    author = rawName;
+      else if (dept)       author = dept;
+    }
+
+    const item = {
+      id:      'fb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      type:    selectedType,
+      subject, body: bodyTxt, author,
+      date:    new Date().toISOString().split('T')[0],
+      likes:   0,
+    };
+
+    try {
+      await insertItem(item);
+      items.unshift(item);
+      updateStats();
+      renderFeed();
+
+      /* reset */
+      ['f-name', 'f-subject', 'f-body'].forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('f-dept').value = '';
+      document.getElementById('f-anon').checked = false;
+      document.getElementById('char-num').textContent = '0';
+
+      showToast('✓ Отзыв опубликован — спасибо!', 'success');
+      setTimeout(() => document.getElementById('feed-section').scrollIntoView({ behavior: 'smooth' }), 600);
+    } catch (err) {
+      console.error(err);
+      showToast('Ошибка отправки. Проверьте настройки Supabase.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Отправить →';
+    }
+  }
+
+  function shake(el) {
+    el.style.transition = 'transform .08s';
+    [6, -6, 4, -4, 0].forEach((x, i) => setTimeout(() => { el.style.transform = `translateX(${x}px)`; }, i * 80));
+    el.style.borderColor = '#D94141';
+    setTimeout(() => { el.style.borderColor = ''; }, 800);
+  }
+
+  /* ─── Toast ───────────────────────────────────────────── */
+  function showToast(msg, kind = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = kind === 'error' ? '#D94141' : 'var(--success)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3400);
+  }
+
+  /* ─── Filter buttons ──────────────────────────────────── */
+  document.getElementById('filter-row').addEventListener('click', e => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderFeed();
+  });
+
+  /* ─── Render feed ─────────────────────────────────────── */
+  const typeLabel = { suggestion: '💡 Предложение', praise: '👍 Похвала', complaint: '⚠️ Жалоба', question: '❓ Вопрос' };
+  const typeClass = { suggestion: 'badge-suggestion', praise: 'badge-praise', complaint: 'badge-complaint', question: 'badge-question' };
+
+  function renderFeed() {
+    const grid     = document.getElementById('feed-grid');
+    const likedIds = getLiked();
+    const filtered = currentFilter === 'all' ? items : items.filter(i => i.type === currentFilter);
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><p>Пока нет отзывов в этой категории.<br>Будьте первым!</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map((item, idx) => {
+      const liked = likedIds.includes(item.id);
+      return `
+        <div class="feedback-card" style="animation-delay:${idx * .06}s">
+          <span class="card-badge ${typeClass[item.type]}">${typeLabel[item.type]}</span>
+          <p style="font-weight:600;font-size:.93rem;margin-bottom:.5rem;color:var(--ink)">${esc(item.subject)}</p>
+          <p class="card-body">${esc(item.body)}</p>
+          <div class="card-meta">
+            <span>${esc(item.author)} · ${formatDate(item.date)}</span>
+            <button class="card-like ${liked ? 'liked' : ''}" onclick="toggleLike('${esc(item.id)}', this)">
+              ♥ <span>${item.likes}</span>
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  async function toggleLike(id, btn) {
+    const likedIds = getLiked();
+    const item     = items.find(i => i.id === id);
+    if (!item) return;
+
+    const alreadyLiked = likedIds.includes(id);
+    const newLikes     = item.likes + (alreadyLiked ? -1 : 1);
+
+    /* optimistic update */
+    item.likes = newLikes;
+    btn.classList.toggle('liked', !alreadyLiked);
+    btn.querySelector('span').textContent = newLikes;
+
+    if (alreadyLiked) saveLiked(likedIds.filter(x => x !== id));
+    else              saveLiked([...likedIds, id]);
+
+    try { await patchLikes(id, newLikes); }
+    catch { /* rollback */ item.likes -= (alreadyLiked ? -1 : 1); renderFeed(); }
+  }
+
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  /* ─── Intersection Observer ───────────────────────────── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ─── Init ────────────────────────────────────────────── */
+  async function init() {
+    const grid = document.getElementById('feed-grid');
+    grid.innerHTML = `<div class="empty-state"><span class="empty-icon" style="font-size:1.8rem;animation:spin 1s linear infinite;display:inline-block">⟳</span><p style="margin-top:.5rem">Загружаем отзывы…</p></div>`;
+
+    try {
+      items = await loadItems();
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><p>Не удалось загрузить отзывы.<br>Проверьте SUPABASE_URL и SUPABASE_KEY в коде.</p></div>`;
+      return;
+    }
+
+    updateStats();
+    renderFeed();
+  }
+
+  /* Spinner keyframe */
+  const style = document.createElement('style');
+  style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(style);
+
+  init();
+</script>
+</body>
+</html>
